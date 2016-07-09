@@ -9,14 +9,21 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    let planeTexture = SKTexture(imageNamed: "Spaceship")
+    var plane:SKSpriteNode!
+    var isTouch = false
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
         
-        self.addChild(myLabel)
+        plane = SKSpriteNode(texture: planeTexture)
+        plane.position = CGPointMake(size.width * 0.5, size.height * 0.5)
+        plane.yScale = 0.5
+        plane.xScale = 0.5
+        plane.setScale(0.5)
+        plane.name = "plane"
+        addChild(plane)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -24,6 +31,10 @@ class GameScene: SKScene {
         
         for touch in touches {
             let location = touch.locationInNode(self)
+            let node = self.nodeAtPoint(location)
+            if node.name == "plane"{
+                isTouch = true
+            }
             
             let sprite = SKSpriteNode(imageNamed:"Spaceship")
             
